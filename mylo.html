@@ -1,150 +1,160 @@
-<!DOCTYPE html>
+<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>I'm Sorry 💔</title>
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
-    background-size: 400% 400%;
-    animation: gradientShift 10s ease infinite;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>I'm Sorry — A Letter</title>
+  <style>
+    :root{--pink1:#ff9a9e;--pink2:#fecfef;--accent:#ff4d6d}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    body{
+      background: radial-gradient(circle at 10% 10%, rgba(255,154,158,0.15), transparent 15%),
+                  radial-gradient(circle at 90% 90%, rgba(255,206,239,0.12), transparent 18%),
+                  linear-gradient(135deg,var(--pink1),var(--pink2));
+      background-size:400% 400%;animation:bgShift 18s ease-in-out infinite;
+      overflow:hidden;display:flex;align-items:center;justify-content:center;padding:32px;color:#3a0026
+    }
+    @keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+    .stage{width:100%;max-width:1100px;height:80vh;background:rgba(255,255,255,0.62);backdrop-filter:blur(6px);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,0.12);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
 
-  h1 {
-    font-size: 3rem;
-    margin: 10px 0;
-    text-align: center;
-    animation: fadeIn 3s ease-in-out;
-  }
+    /* left: visuals */
+    .left{position:relative;display:flex;align-items:center;justify-content:center;padding:40px}
+    .glow-heart{width:260px;height:260px;position:relative;transform:rotate(-45deg)}
+    .glow-heart > div{position:absolute;width:100%;height:100%;background:radial-gradient(circle at 30% 30%, #fff6f8, transparent 30%), linear-gradient(180deg,#ff6b84,#ff3b6b);border-radius:20%;filter:blur(0.8px);box-shadow:0 30px 60px rgba(255,77,109,0.18);transform:rotate(45deg)}
+    .glow-heart:before,.glow-heart:after{content:'';position:absolute;width:60%;height:60%;background:linear-gradient(180deg,#ff7a93,#ff4d6d);border-radius:50%}
+    .glow-heart:before{left:-25%;top:0}
+    .glow-heart:after{right:-25%;top:0}
+    .pulse{position:absolute;inset:-20%;border-radius:999px;filter:blur(20px);opacity:0.28;background:radial-gradient(circle,#ffd6df,transparent 40%);animation:pulse 1800ms ease-in-out infinite}
+    @keyframes pulse{0%{transform:scale(0.95);opacity:0.25}50%{transform:scale(1.12);opacity:0.48}100%{transform:scale(0.95);opacity:0.25}}
 
-  p {
-    font-size: 1.4rem;
-    text-align: center;
-    max-width: 600px;
-    animation: fadeIn 5s ease-in-out;
-  }
+    /* right: letter */
+    .right{padding:44px 36px;display:flex;flex-direction:column;justify-content:center;gap:18px}
+    .letter{font-family:'Georgia', 'Times New Roman', serif;background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.85));border-radius:12px;padding:28px;box-shadow:inset 0 -6px 18px rgba(0,0,0,0.03)}
+    .title{font-family: 'Great Vibes', cursive;font-size:46px;color:var(--accent);margin:0 0 6px;letter-spacing:0.6px}
+    .typed{font-size:18px;color:#2b1522;min-height:120px;line-height:1.6}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    .controls{display:flex;gap:12px;margin-top:6px}
+    .btn{padding:10px 16px;border-radius:999px;border:0;background:linear-gradient(90deg,var(--accent),#ff7aa3);color:white;font-weight:600;cursor:pointer;box-shadow:0 10px 24px rgba(255,77,109,0.12)}
+    .btn.secondary{background:transparent;color:var(--accent);border:2px solid rgba(255,77,109,0.12)}
 
-  .heart {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    background: red;
-    transform: rotate(-45deg);
-    animation: heartbeat 1.5s infinite;
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
-  }
+    .signature{margin-top:8px;font-size:15px;color:#6a2a42}
 
-  .heart::before, .heart::after {
-    content: "";
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    background: red;
-    border-radius: 50%;
-  }
+    /* floating petals & sparks */
+    .petal{position:absolute;pointer-events:none;font-size:22px;opacity:0.95}
+    .spark{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.9);filter:blur(6px);opacity:0.9}
 
-  .heart::before { top: -75px; left: 0; }
-  .heart::after { left: 75px; top: 0; }
-
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1) rotate(-45deg); }
-    50% { transform: scale(1.2) rotate(-45deg); }
-  }
-
-  button {
-    margin-top: 40px;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 30px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #ff4d6d;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-  }
-
-  button:hover {
-    background: #ff4d6d;
-    color: white;
-    box-shadow: 0 0 30px rgba(255, 77, 109, 0.9);
-  }
-
-  .signature {
-    margin-top: 50px;
-    font-style: italic;
-    font-size: 1.5rem;
-    opacity: 0.9;
-    animation: fadeIn 6s ease-in-out;
-  }
-
-  /* Floating hearts animation */
-  .floating-heart {
-    position: absolute;
-    color: rgba(255,255,255,0.8);
-    animation: floatUp 6s ease-in-out infinite;
-    font-size: 1.5rem;
-  }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(0.8); opacity: 1; }
-    100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
-  }
-</style>
+    /* responsive */
+    @media (max-width:880px){.stage{grid-template-columns:1fr;height:auto;padding:18px}.left{padding:28px}.right{padding:22px}}
+  </style>
 </head>
 <body>
-  <h1>I'm Really Sorry 💔</h1>
-  <div class="heart"></div>
+  <div class="stage" role="main" aria-live="polite">
+    <div class="left" aria-hidden="false">
+      <div class="glow-heart" id="glowHeart">
+        <div></div>
+        <div class="pulse" style="z-index:-1"></div>
+      </div>
+    </div>
 
-  <button onclick="playMusic()">Send Love 💞</button>
+    <div class="right">
+      <div class="letter">
+        <h2 class="title">I'm Really Sorry</h2>
+        <div class="typed" id="typed"></div>
+        <div class="signature">— your baby</div>
+      </div>
 
-  <div class="signature">— your sattu baby</div>
+      <div class="controls">
+        <button class="btn" id="sendBtn">Send Love 💞</button>
+        <button class="btn secondary" id="stopBtn">Stop Music</button>
+      </div>
+    </div>
 
-  <audio id="piano" preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5dc47a6a3d.mp3?filename=soft-piano-romantic-ambient-110624.mp3" type="audio/mpeg">
-  </audio>
+    <!-- petals and sparks container -->
+    <div id="fx" aria-hidden="true"></div>
+  </div>
 
-  <script>
-    function playMusic() {
-      const audio = document.getElementById("piano");
-      audio.play().catch(e => console.log("Autoplay blocked:", e));
-      createHearts();
-    }
+<script>
+// ================= Audio (WebAudio soft piano loop) ==================
+let audioCtx = null; let masterGain=null; let isPlaying=false; let scheduleTimer=null;
+function createAudio(){
+  if(audioCtx) return audioCtx;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if(!AC) return null;
+  audioCtx = new AC(); masterGain = audioCtx.createGain(); masterGain.gain.value = 0.16; masterGain.connect(audioCtx.destination);
+  return audioCtx;
+}
+function playChord(at, freqs){
+  const ctx = createAudio(); if(!ctx) return;
+  freqs.forEach(f=>{
+    const osc = ctx.createOscillator(); const g = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.value = f; g.gain.setValueAtTime(0, at);
+    g.gain.linearRampToValueAtTime(0.9, at + 0.02); g.gain.exponentialRampToValueAtTime(0.001, at + 2.6);
+    const filter = ctx.createBiquadFilter(); filter.type='lowpass'; filter.frequency.value=2400;
+    osc.connect(filter); filter.connect(g); g.connect(masterGain);
+    osc.start(at); osc.stop(at + 2.7);
+  });
+}
+function scheduleLoop(){
+  if(isPlaying) return; isPlaying=true; const ctx=createAudio(); if(!ctx)return; if(ctx.state==='suspended') ctx.resume().catch(()=>{});
+  let i=0; function tick(){ if(!isPlaying)return; const t = ctx.currentTime + 0.05;
+    const chords = [[261.63,329.63,392.00],[220.00,277.18,329.63],[246.94,311.13,369.99]];
+    playChord(t, chords[i%chords.length]); i++; scheduleTimer = setTimeout(tick, 1800 + (Math.random()*600)); }
+  tick();
+}
+function stopLoop(){ isPlaying=false; if(scheduleTimer){ clearTimeout(scheduleTimer); scheduleTimer=null; } }
 
-    function createHearts() {
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement("div");
-        heart.classList.add("floating-heart");
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (3 + Math.random() * 5) + "s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }
-    }
-  </script>
+// Attempt gentle autoplay; browsers may block — fallback to gesture
+window.addEventListener('load', ()=>{ try{ createAudio(); scheduleLoop(); }catch(e){ console.warn('audio start blocked',e); } });
+
+// ================= Typing effect ==================
+const lines = [
+  "I'm truly sorry, my dear Professor ma'am ji. Don’t be mad at me, please. I just want to hear your voice again."
+];
+const typedEl = document.getElementById('typed');
+let lineIdx=0, charIdx=0;
+function typeStep(){
+  if(lineIdx >= lines.length) return;
+  const line = lines[lineIdx];
+  if(charIdx <= line.length){
+    typedEl.innerHTML = lines.slice(0,lineIdx).map(l=>`<div>${escapeHtml(l)}</div>`).join('') + `<div>${escapeHtml(line.slice(0,charIdx))}${charIdx%2?'<span style="opacity:0.3">|</span>':''}</div>`;
+    charIdx++; setTimeout(typeStep, 46 + Math.random()*80);
+  }else{ charIdx=0; lineIdx++; setTimeout(typeStep, 600); }
+}
+function escapeHtml(s){ return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+setTimeout(typeStep, 700);
+
+// ================= Petals & Sparks ==================
+const fx = document.getElementById('fx');
+function createPetal(){ const p=document.createElement('div'); p.className='petal'; p.textContent='🌹';
+  const startX = Math.random()*100; p.style.left = startX + 'vw'; p.style.top = '-6vh'; p.style.opacity = (0.7+Math.random()*0.3);
+  p.style.fontSize = (18+Math.random()*28)+'px'; fx.appendChild(p);
+  const duration = 5000 + Math.random()*5000;
+  p.animate([{transform:'translateY(0) rotate(0deg)', opacity:p.style.opacity},{transform:`translateY(${100+Math.random()*40}vh) rotate(${(Math.random()*200-100)}deg)`, opacity:0}],{duration:duration, easing:'cubic-bezier(.2,.9,.2,.9)'});
+  setTimeout(()=>p.remove(), duration+50);
+}
+function createSpark(){ const s=document.createElement('div'); s.className='spark'; const left=Math.random()*100; const top=20+Math.random()*60; s.style.left= left+'vw'; s.style.top = top+'vh'; fx.appendChild(s);
+  const dur=1200+Math.random()*1800; s.animate([{transform:'scale(0.6)', opacity:1},{transform:'scale(1.6)', opacity:0}],{duration:dur,easing:'ease-out'});
+  setTimeout(()=>s.remove(), dur+40);
+}
+// continuous subtle FX
+setInterval(()=>{ if(Math.random()<0.45) createSpark(); if(Math.random()<0.25) createPetal(); }, 700);
+
+// ================= Send Love btn ==================
+const sendBtn = document.getElementById('sendBtn'); const stopBtn = document.getElementById('stopBtn');
+sendBtn.addEventListener('click', ()=>{ try{ scheduleLoop(); }catch(e){} // ensure audio
+  // big petal burst + heart pulses
+  for(let i=0;i<12;i++) setTimeout(()=>createPetal(), i*80);
+  for(let i=0;i<6;i++) setTimeout(()=>createSpark(), i*120);
+  sendBtn.textContent='Sent ❤️'; sendBtn.disabled=true;
+});
+stopBtn.addEventListener('click', ()=>{ stopLoop(); stopBtn.textContent='Stopped'; });
+
+// Ensure context resumes on first user gesture (some browsers require gesture to unlock audio)
+document.addEventListener('pointerdown', ()=>{ if(audioCtx && audioCtx.state==='suspended') audioCtx.resume().catch(()=>{}); }, {once:true});
+
+</script>
 </body>
 </html>
-
