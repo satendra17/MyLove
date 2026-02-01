@@ -2,275 +2,169 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Will You Be My Valentine? ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Valentine 💖</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --pink: #ff4d6d;
+*{box-sizing:border-box;font-family:Poppins,sans-serif}
+body{
+  margin:0;
+  background:linear-gradient(135deg,#ff4e8a,#ff85a2);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.screen{
+  text-align:center;
+  color:white;
+  width:100%;
+  max-width:400px;
+  padding:20px;
+  display:none;
 }
-
-body {
-  height: 100vh;
-  background: radial-gradient(circle at top, #ff758c, #1a1a2e);
-  overflow: hidden;
-  font-family: 'Poppins', sans-serif;
-  color: white;
+.screen.active{display:block}
+h1{
+  font-family:'Great Vibes',cursive;
+  font-size:2.5rem;
 }
-
-/* Canvas background */
-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
+p{font-size:1.1rem;margin:15px 0}
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  font-size:1rem;
+  cursor:pointer;
 }
-
-/* Scene */
-.scene {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  transition: opacity 1.5s ease, transform 1.5s ease;
+.primary{background:#ff2f6e;color:white}
+.secondary{background:white;color:#ff2f6e}
+img{
+  width:100%;
+  max-width:280px;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
 }
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.9);
+.heart{
+  position:fixed;
+  font-size:24px;
+  animation:float 4s linear forwards;
 }
-
-/* Typography */
-h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 60px;
-  margin-bottom: 20px;
-  text-shadow: 0 0 30px rgba(255,77,109,0.9);
+@keyframes float{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-100vh);opacity:0}
 }
-
-p {
-  font-size: 20px;
-  max-width: 520px;
-  line-height: 1.7;
+#gameArea{
+  position:relative;
+  height:300px;
+  border:2px dashed rgba(255,255,255,.5);
+  border-radius:15px;
+  margin-top:20px;
 }
-
-/* Typewriter */
-.type {
-  border-right: 2px solid white;
-  padding-right: 5px;
-  animation: blink 0.8s infinite;
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-
-/* Buttons */
-.buttons {
-  margin-top: 40px;
-  display: flex;
-  gap: 30px;
-}
-
-button {
-  padding: 15px 38px;
-  border-radius: 45px;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.4s ease;
-}
-
-.yes {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  color: white;
-  box-shadow: 0 15px 40px rgba(255,75,110,0.8);
-}
-
-.yes:hover {
-  transform: scale(1.2);
-}
-
-.no {
-  background: rgba(255,255,255,0.85);
-  color: var(--pink);
-  cursor: not-allowed;
-}
-
-/* Final scene */
-.final {
-  background: radial-gradient(circle, #ff4d6d, #1a1a2e);
-}
-
-.final h1 {
-  font-size: 70px;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  50% { transform: scale(1.08); }
-}
-
-/* Image reveal */
-.love-image {
-  max-width: 300px;
-  border-radius: 20px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-  animation: popIn 1s ease;
-}
-
-@keyframes popIn {
-  from { transform: scale(0.5); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* Hearts & Roses */
-.fall {
-  position: absolute;
-  top: -30px;
-  font-size: 24px;
-  animation: fall linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(120vh) rotate(360deg);
-    opacity: 0;
-  }
+#movingHeart{
+  position:absolute;
+  font-size:30px;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="canvas"></canvas>
-
-<!-- Scene 1 -->
-<div class="scene" id="scene1">
-  <h1>Hello My Love ❤️</h1>
-  <p>Before I ask you something magical…  
-     let me tell you what my heart feels ✨</p>
+<!-- INTRO -->
+<div class="screen active" id="intro">
+  <h1>Hey You 💕</h1>
+  <p>
+    I made something special…<br>
+    Not flowers, not chocolates…<br>
+    Something from my heart 🌹
+  </p>
+  <button class="primary" onclick="next('game')">Start 💖</button>
 </div>
 
-<!-- Scene 2 -->
-<div class="scene hidden" id="scene2">
-  <p id="typeText" class="type"></p>
-</div>
-
-<!-- Scene 3 -->
-<div class="scene hidden" id="scene3">
-  <h1>Will you be my Valentine? 💖</h1>
-  <div class="buttons">
-    <button class="yes" onclick="sayYes()">Yes 💘</button>
-    <button class="no" onmouseover="runAway(this)">No 🙈</button>
+<!-- GAME -->
+<div class="screen" id="game">
+  <h1>Catch My Heart 💘</h1>
+  <p>Catch it 3 times to unlock my feelings 😌</p>
+  <div id="gameArea">
+    <div id="movingHeart">❤️</div>
   </div>
+  <p id="scoreText">Score: 0</p>
 </div>
 
-<!-- Final Scene -->
-<div class="scene hidden final" id="final">
-  <h1>You Said YES ❤️</h1>
-  <img src="./love.jpeg" class="love-image" alt="Love">
-  <p style="margin-top:20px">
-    My heart is yours… today, tomorrow & always 🌹✨
+<!-- QUESTION -->
+<div class="screen" id="question">
+  <h1>Now Answer Me 💞</h1>
+  <p>
+    I smile because of you.<br>
+    I blush because of you.<br>
+    I fall… because of you 🥰
+  </p>
+  <button class="primary" id="yesBtn">Yes 💖</button>
+  <button class="secondary" id="noBtn">No 🙈</button>
+</div>
+
+<!-- FINAL -->
+<div class="screen" id="final">
+  <h1>You’re Mine 💘</h1>
+  <img src="love.jpeg" alt="Love">
+  <p>
+    My heart is yours…<br>
+    today, tomorrow & always 🌹✨
   </p>
 </div>
 
+<audio id="song" src="song.mp3"></audio>
+
 <script>
-/* Scene transitions */
-setTimeout(() => switchScene(1,2), 2500);
-setTimeout(() => switchScene(2,3), 9500);
+let score=0;
+const heart=document.getElementById('movingHeart');
+const scoreText=document.getElementById('scoreText');
+const noBtn=document.getElementById('noBtn');
+const song=document.getElementById('song');
 
-function switchScene(a,b){
-  document.getElementById("scene"+a).classList.add("hidden");
-  document.getElementById("scene"+b).classList.remove("hidden");
+function next(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-/* Typewriter */
-const text =
-"Every smile of yours feels like home.\n" +
-"Every moment with you slows time.\n\n" +
-"So today… I ask with all my heart 💗";
+function moveHeart(){
+  const area=document.getElementById('gameArea');
+  heart.style.left=Math.random()*(area.clientWidth-30)+'px';
+  heart.style.top=Math.random()*(area.clientHeight-30)+'px';
+}
+moveHeart();
+setInterval(moveHeart,800);
 
-let i = 0;
-function typeWriter() {
-  if (i < text.length) {
-    typeText.innerHTML += text[i] === "\n" ? "<br>" : text[i];
-    i++;
-    setTimeout(typeWriter, 60);
+heart.onclick=()=>{
+  score++;
+  scoreText.innerText="Score: "+score;
+  if(score>=3){
+    next('question');
   }
-}
-setTimeout(typeWriter, 3000);
+};
 
-/* No button tease */
-function runAway(btn) {
-  btn.style.transform =
-    `translate(${Math.random()*300-150}px, ${Math.random()*200-100}px)`;
-}
+noBtn.onmouseover=()=>{
+  noBtn.style.position='fixed';
+  noBtn.style.left=Math.random()*(window.innerWidth-100)+'px';
+  noBtn.style.top=Math.random()*(window.innerHeight-50)+'px';
+};
 
-/* YES click */
-function sayYes() {
-  document.getElementById("scene3").classList.add("hidden");
-  document.getElementById("final").classList.remove("hidden");
-  rainLove();
-}
-
-/* Hearts & Roses rain */
-function rainLove() {
-  const icons = ["❤️","💖","🌹","💕","💘"];
-  for (let i = 0; i < 120; i++) {
-    const el = document.createElement("div");
-    el.className = "fall";
-    el.innerHTML = icons[Math.floor(Math.random()*icons.length)];
-    el.style.left = Math.random()*100 + "vw";
-    el.style.animationDuration = 4 + Math.random()*4 + "s";
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 9000);
-  }
-}
-
-/* Canvas particles */
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-const dots = Array.from({length:100}, () => ({
-  x: Math.random()*canvas.width,
-  y: Math.random()*canvas.height,
-  r: Math.random()*2 + 1,
-  dy: Math.random()*0.6 + 0.4
-}));
-
-function animate() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "rgba(255,255,255,0.7)";
-  dots.forEach(d => {
-    d.y -= d.dy;
-    if (d.y < 0) d.y = canvas.height;
-    ctx.beginPath();
-    ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-window.onresize = () => {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
+document.getElementById('yesBtn').onclick=()=>{
+  next('final');
+  song.play();
+  setInterval(()=>{
+    const h=document.createElement('div');
+    h.className='heart';
+    h.innerText=['❤️','🌹','💖','💕'][Math.floor(Math.random()*4)];
+    h.style.left=Math.random()*window.innerWidth+'px';
+    h.style.bottom='0px';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  },300);
 };
 </script>
 
