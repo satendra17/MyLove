@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Valentine 💖</title>
+<title>Only For You 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -11,42 +11,43 @@
 *{box-sizing:border-box;font-family:Poppins,sans-serif}
 body{
   margin:0;
-  background:linear-gradient(135deg,#ff4e8a,#ff85a2);
   height:100vh;
-  overflow:hidden;
+  background:linear-gradient(135deg,#ff3d6f,#ff9a9e);
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
 }
 .screen{
+  display:none;
   text-align:center;
   color:white;
+  max-width:420px;
   width:100%;
-  max-width:400px;
   padding:20px;
-  display:none;
 }
 .screen.active{display:block}
 h1{
   font-family:'Great Vibes',cursive;
-  font-size:2.5rem;
+  font-size:2.6rem;
 }
-p{font-size:1.1rem;margin:15px 0}
+p{font-size:1.05rem;margin:15px 0}
 button{
   padding:12px 25px;
   border:none;
   border-radius:30px;
   font-size:1rem;
   cursor:pointer;
+  margin:5px;
 }
-.primary{background:#ff2f6e;color:white}
-.secondary{background:white;color:#ff2f6e}
+.primary{background:#ff1f5a;color:white}
+.secondary{background:white;color:#ff1f5a}
 img{
   width:100%;
   max-width:280px;
   border-radius:20px;
   margin-top:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
 }
 .heart{
   position:fixed;
@@ -57,17 +58,25 @@ img{
   from{transform:translateY(0);opacity:1}
   to{transform:translateY(-100vh);opacity:0}
 }
-#gameArea{
-  position:relative;
-  height:300px;
+#gameBox{
+  height:280px;
   border:2px dashed rgba(255,255,255,.5);
   border-radius:15px;
-  margin-top:20px;
+  position:relative;
+  margin-top:15px;
 }
-#movingHeart{
+#runHeart{
   position:absolute;
-  font-size:30px;
+  font-size:32px;
   cursor:pointer;
+}
+.option{
+  display:block;
+  background:white;
+  color:#ff1f5a;
+  padding:10px;
+  border-radius:20px;
+  margin:10px 0;
 }
 </style>
 </head>
@@ -75,96 +84,118 @@ img{
 <body>
 
 <!-- INTRO -->
-<div class="screen active" id="intro">
+<div class="screen active">
   <h1>Hey You 💕</h1>
   <p>
-    I made something special…<br>
-    Not flowers, not chocolates…<br>
-    Something from my heart 🌹
+    This is not a normal website.<br>
+    This is my heart… coded for you 💻❤️
   </p>
-  <button class="primary" onclick="next('game')">Start 💖</button>
+  <button class="primary" onclick="go(1)">Continue 💖</button>
+</div>
+
+<!-- STORY -->
+<div class="screen">
+  <h1>Listen… 🌹</h1>
+  <p>
+    Every smile of yours feels like spring.<br>
+    Every silence of yours feels like missing you.<br>
+    I tried ignoring my feelings…<br>
+    But love doesn’t listen 😌
+  </p>
+  <button class="primary" onclick="go(2)">Next 💞</button>
+</div>
+
+<!-- QUIZ -->
+<div class="screen">
+  <h1>Quick Test 😏</h1>
+  <p>What do I feel when I see you?</p>
+  <div class="option" onclick="wrong()">Hunger 🍔</div>
+  <div class="option" onclick="right()">Butterflies 🦋</div>
+  <div class="option" onclick="wrong()">Sleep 😴</div>
 </div>
 
 <!-- GAME -->
-<div class="screen" id="game">
+<div class="screen">
   <h1>Catch My Heart 💘</h1>
-  <p>Catch it 3 times to unlock my feelings 😌</p>
-  <div id="gameArea">
-    <div id="movingHeart">❤️</div>
+  <p>Catch it 4 times to continue</p>
+  <div id="gameBox">
+    <div id="runHeart">❤️</div>
   </div>
-  <p id="scoreText">Score: 0</p>
+  <p id="score">Score: 0</p>
 </div>
 
 <!-- QUESTION -->
-<div class="screen" id="question">
-  <h1>Now Answer Me 💞</h1>
+<div class="screen">
+  <h1>Now Tell Me… 💍</h1>
   <p>
-    I smile because of you.<br>
-    I blush because of you.<br>
-    I fall… because of you 🥰
+    If I promise loyalty.<br>
+    If I promise care.<br>
+    If I promise all my love…<br>
+    Will you be my Valentine? 💖
   </p>
-  <button class="primary" id="yesBtn">Yes 💖</button>
-  <button class="secondary" id="noBtn">No 🙈</button>
+  <button class="primary" id="yes">Yes 💘</button>
+  <button class="secondary" id="no">No 🙈</button>
 </div>
 
 <!-- FINAL -->
-<div class="screen" id="final">
-  <h1>You’re Mine 💘</h1>
-  <img src="love.jpeg" alt="Love">
+<div class="screen">
+  <h1>You Said Yes 💞</h1>
+  <img src="love.jpeg">
   <p>
-    My heart is yours…<br>
-    today, tomorrow & always 🌹✨
+    From today…<br>
+    My heart beats with your name.<br>
+    Happy Valentine’s Day 🌹✨
   </p>
 </div>
 
 <audio id="song" src="song.mp3"></audio>
 
 <script>
+const screens=document.querySelectorAll('.screen');
+let step=0;
+function go(i){
+  screens[step].classList.remove('active');
+  step=i;
+  screens[step].classList.add('active');
+}
+
+function wrong(){alert("Nope 😜 try again")}
+function right(){go(3)}
+
 let score=0;
-const heart=document.getElementById('movingHeart');
-const scoreText=document.getElementById('scoreText');
-const noBtn=document.getElementById('noBtn');
-const song=document.getElementById('song');
-
-function next(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+const heart=document.getElementById('runHeart');
+const scoreText=document.getElementById('score');
+function move(){
+  const box=document.getElementById('gameBox');
+  heart.style.left=Math.random()*(box.clientWidth-30)+'px';
+  heart.style.top=Math.random()*(box.clientHeight-30)+'px';
 }
-
-function moveHeart(){
-  const area=document.getElementById('gameArea');
-  heart.style.left=Math.random()*(area.clientWidth-30)+'px';
-  heart.style.top=Math.random()*(area.clientHeight-30)+'px';
-}
-moveHeart();
-setInterval(moveHeart,800);
-
+setInterval(move,700);
 heart.onclick=()=>{
   score++;
   scoreText.innerText="Score: "+score;
-  if(score>=3){
-    next('question');
-  }
+  if(score>=4) go(4);
 };
 
-noBtn.onmouseover=()=>{
-  noBtn.style.position='fixed';
-  noBtn.style.left=Math.random()*(window.innerWidth-100)+'px';
-  noBtn.style.top=Math.random()*(window.innerHeight-50)+'px';
+const no=document.getElementById('no');
+no.onmouseover=()=>{
+  no.style.position='fixed';
+  no.style.left=Math.random()*(window.innerWidth-100)+'px';
+  no.style.top=Math.random()*(window.innerHeight-50)+'px';
 };
 
-document.getElementById('yesBtn').onclick=()=>{
-  next('final');
-  song.play();
+document.getElementById('yes').onclick=()=>{
+  go(5);
+  document.getElementById('song').play();
   setInterval(()=>{
     const h=document.createElement('div');
     h.className='heart';
-    h.innerText=['❤️','🌹','💖','💕'][Math.floor(Math.random()*4)];
+    h.innerText=['❤️','🌹','💖','💕','💘'][Math.floor(Math.random()*5)];
     h.style.left=Math.random()*window.innerWidth+'px';
     h.style.bottom='0px';
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),4000);
-  },300);
+  },250);
 };
 </script>
 
